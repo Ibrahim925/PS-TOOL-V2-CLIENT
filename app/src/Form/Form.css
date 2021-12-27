@@ -1,0 +1,31 @@
+.formInput {
+	width: 400px;
+	height: 30px;
+	padding: 5px;
+	padding-left: 15px;
+	border: none;
+
+	display: block;
+	margin-bottom: 50px;
+}
+
+.formButton {
+	background-color: var(--accent);
+	color: var(--white);
+	border: none;
+	font-family: ExtraBold;
+
+	padding: 15px 20px;
+	margin-top: 10px;
+
+	cursor: pointer;
+	transition: 0.5s ease;
+}
+
+.formButton:hover {
+	transform: scale(1.02);
+}
+
+.formButton:active {
+	border-style: outset;
+}

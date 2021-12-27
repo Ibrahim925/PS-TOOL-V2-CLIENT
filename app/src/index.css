@@ -1,0 +1,31 @@
+@font-face {
+	font-family: ExtraBold;
+	src: url("/Users/ibrahim/Code/PS-Tools-V2/PS-TOOL-V2-CLIENT/app/src/Montserrat/Montserrat-ExtraBold.ttf")
+		format("truetype");
+}
+
+@font-face {
+	font-family: Bold;
+	src: url("/Users/ibrahim/Code/PS-Tools-V2/PS-TOOL-V2-CLIENT/app/src/Montserrat/Montserrat-Bold.ttf")
+		format("truetype");
+}
+
+@font-face {
+	font-family: Medium;
+	src: url("/Users/ibrahim/Code/PS-Tools-V2/PS-TOOL-V2-CLIENT/app/src/Montserrat/Montserrat-Medium.ttf")
+		format("truetype");
+}
+
+:root {
+	--base: #000c49;
+	--accent: #ff00e5;
+	--white: #ffffff;
+}
+
+* {
+	font-family: Medium;
+}
+
+a {
+	text-decoration: none;
+}
