@@ -1,4 +1,4 @@
-.formInput {
+#formInput {
 	width: 400px;
 	height: 30px;
 	padding: 5px;
@@ -9,23 +9,33 @@
 	margin-bottom: 50px;
 }
 
-.formButton {
+#formButton {
 	background-color: var(--accent);
 	color: var(--white);
-	border: none;
-	font-family: ExtraBold;
+	border-radius: 0;
+	font-family: Bold;
 
 	padding: 15px 20px;
 	margin-top: 10px;
+	position: relative;
 
 	cursor: pointer;
 	transition: 0.5s ease;
 }
 
-.formButton:hover {
+#formButton:hover {
 	transform: scale(1.02);
 }
 
-.formButton:active {
+#formButton:active {
 	border-style: outset;
+}
+
+#formButtonChildren {
+	font-family: Bold;
+	display: inline;
+}
+
+#formButtonEndIcon {
+	display: inline;
 }

@@ -20,12 +20,30 @@
 	--base: #000c49;
 	--accent: #ff00e5;
 	--white: #ffffff;
+	--foreground: #f0f0f0;
+	--shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	--foreground-content: #e2e2e2;
 }
 
 * {
 	font-family: Medium;
 }
 
+body {
+	overscroll-behavior: none;
+	padding: 0;
+}
+
 a {
 	text-decoration: none;
+}
+
+.pageWithHeader {
+	padding-top: 75px;
+}
+
+.pageWithSideBar {
+	position: absolute;
+	right: 0;
+	width: 80%;
 }

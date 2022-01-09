@@ -2,6 +2,13 @@ import React from "react";
 import "./Form.css";
 
 export default function Input(props) {
-	console.log(props);
-	return <input className='formInput' {...props} />;
+	const { update, ...restProps } = props;
+
+	return (
+		<input
+			id='formInput'
+			onChange={(e) => update(e.target.value)}
+			{...restProps}
+		/>
+	);
 }
