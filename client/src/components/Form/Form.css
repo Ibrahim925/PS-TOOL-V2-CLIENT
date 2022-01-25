@@ -1,10 +1,21 @@
+/* Form Input */
+.form-input-container {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+.form-input-error-message {
+	color: red;
+	font-size: 14px;
+	position: absolute;
+}
+
 .form-input {
 	padding: 9px;
 	width: 50%;
 	min-width: 300px;
 	max-width: 700px;
 	display: block;
-	margin-bottom: 50px;
 }
 
 .form-button {
@@ -14,8 +25,15 @@
 	padding: 10px 20px;
 	cursor: pointer;
 	transition: 0.3s;
+	display: block;
 }
 
 .form-button:hover {
 	transform: scale(1.02);
+}
+
+.form-button:disabled {
+	opacity: 70%;
+	cursor: no-drop;
+	transform: scale(1);
 }
