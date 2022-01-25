@@ -1,0 +1,26 @@
+#auth-page-logo-container {
+	width: 40%;
+	height: 100vh;
+	position: relative;
+	float: left;
+}
+
+#auth-page-logo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-70%);
+}
+
+#auth-page-form-section {
+	background-color: var(--base);
+	width: 60%;
+	float: right;
+	height: 100vh;
+}
+
+#auth-page-header {
+	color: white;
+	font-family: bold;
+	font-size: 40px;
+}

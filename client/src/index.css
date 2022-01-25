@@ -1,0 +1,27 @@
+@font-face {
+	font-family: regular;
+	src: url("./Roboto_Mono/RobotoMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: bold;
+	src: url("./Roboto_Mono/RobotoMono-Bold.ttf") format("truetype");
+}
+
+:root {
+	--base: #232331;
+	--white: white;
+	--accent: #ff00e5;
+	--foreground: #f0f0f0;
+
+	--base-font: regular;
+}
+
+* {
+	font-family: var(--base-font);
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
