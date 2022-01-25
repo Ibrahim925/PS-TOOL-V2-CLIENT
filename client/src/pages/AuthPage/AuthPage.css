@@ -31,6 +31,10 @@
 	margin-top: 80px;
 }
 
+#auth-page-button {
+	margin-top: 50px;
+}
+
 /* Handle small screen */
 @media only screen and (max-width: 750px) {
 	#auth-page-logo {

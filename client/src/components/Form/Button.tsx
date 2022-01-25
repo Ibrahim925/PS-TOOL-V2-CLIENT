@@ -1,8 +1,17 @@
 import React from "react";
 import "./Form.css";
 
-const Button: React.FC = (props) => {
-	return <button className='form-button'>{props.children}</button>;
+interface ButtonProps {
+	id: string;
+	onClick: () => void;
+}
+
+const Button: React.FC<ButtonProps> = (props) => {
+	return (
+		<button className='form-button' id={props.id} onClick={props.onClick}>
+			{props.children}
+		</button>
+	);
 };
 
 export default Button;
