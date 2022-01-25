@@ -22,5 +22,33 @@
 #auth-page-header {
 	color: white;
 	font-family: bold;
-	font-size: 40px;
+	font-size: 50px;
+	margin-bottom: 80px;
+}
+
+#auth-page-form {
+	margin-left: 80px;
+	margin-top: 80px;
+}
+
+/* Handle small screen */
+@media only screen and (max-width: 750px) {
+	#auth-page-logo {
+		display: none;
+	}
+
+	#auth-page-form-section {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 500px;
+		height: 550px;
+		transform: translateX(-50%) translateY(-50%);
+		border-radius: 15px;
+	}
+
+	#auth-page-form {
+		margin-left: 80px;
+		margin-top: 40px;
+	}
 }

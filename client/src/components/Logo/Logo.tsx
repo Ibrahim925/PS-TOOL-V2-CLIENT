@@ -1,6 +1,6 @@
 import React from "react";
-import LogiSenseLogoLight from "../../images/LogiSenseWhiteLogo.png";
-import LogiSenseLogoDark from "../../images/LogiSenseDarkLogo.png";
+import LogiSenseLogoLight from "../../assets/images/LogiSenseWhiteLogo.png";
+import LogiSenseLogoDark from "../../assets/images/LogiSenseDarkLogo.png";
 
 interface LogoProps {
 	id: string;

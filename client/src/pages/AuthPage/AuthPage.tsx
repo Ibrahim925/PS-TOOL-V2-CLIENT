@@ -1,5 +1,7 @@
 import React from "react";
 import Logo from "../../components/Logo/Logo";
+import Input from "../../components/Form/Input";
+import Button from "../../components/Form/Button";
 import "./AuthPage.css";
 
 const AuthPage: React.FC = () => {
@@ -12,6 +14,9 @@ const AuthPage: React.FC = () => {
 			<div id='auth-page-form-section'>
 				<div id='auth-page-form'>
 					<h1 id='auth-page-header'>Log In</h1>
+					<Input id='auth-page-input' placeholder='Email' />
+					<Input id='auth-page-input' placeholder='Password' />
+					<Button>Continue</Button>
 				</div>
 			</div>
 		</div>

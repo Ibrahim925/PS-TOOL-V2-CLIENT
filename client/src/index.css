@@ -1,11 +1,11 @@
 @font-face {
 	font-family: regular;
-	src: url("./Roboto_Mono/RobotoMono-Regular.ttf") format("truetype");
+	src: url("./assets/Roboto_Mono/RobotoMono-Regular.ttf") format("truetype");
 }
 
 @font-face {
 	font-family: bold;
-	src: url("./Roboto_Mono/RobotoMono-Bold.ttf") format("truetype");
+	src: url("./assets/Roboto_Mono/RobotoMono-Bold.ttf") format("truetype");
 }
 
 :root {
@@ -24,4 +24,5 @@
 body {
 	padding: 0;
 	margin: 0;
+	overscroll-behavior: none;
 }
