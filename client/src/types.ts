@@ -10,3 +10,8 @@ export type Errors = Error[];
 export enum SuccessMessage {
 	Success = "SUCCESS",
 }
+
+// Service URLS
+export enum URLS {
+	Auth = "https://ps-tool-v2-auth-service.herokuapp.com",
+}

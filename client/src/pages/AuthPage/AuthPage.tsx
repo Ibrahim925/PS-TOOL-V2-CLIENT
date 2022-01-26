@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Errors } from "../../types";
-import { useParams, Link } from "react-router-dom";
-import { register, logIn } from "../../helpers/request";
+import { Errors, URLS } from "../../types";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { register, logIn, request } from "../../helpers/request";
 import { SuccessMessage } from "../../types";
 import { CircularProgress, Snackbar } from "@mui/material";
 import Logo from "../../components/Logo/Logo";
@@ -12,14 +12,26 @@ import "./AuthPage.css";
 const LogInPage: React.FC = () => {
 	const [userEmail, setUserEmail] = useState("");
 	const [userPassword, setUserPassword] = useState("");
-	const [errors, setErrors] = useState<Errors | null>();
+	const [errors, setErrors] = useState<Errors | null>(null);
 	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	const handleUserLogIn = async () => {
 		setLoading(true);
+		setErrors(null);
 		const response = await logIn(userEmail, userPassword);
 		if (Array.isArray(response)) {
 			setErrors(response);
+		} else if (response.refreshToken) {
+			localStorage.setItem("REFRESH-TOKEN", response.refreshToken);
+
+			request("DELETE", URLS.Auth, "jfdslkjfkdls", {});
+
+			// Get user data and store it in global state
+			// Based on user type, navigate to next page
+
+			// navigate(); <-- TO THE NEXT PAGEEEE
 		}
 		setLoading(false);
 	};
@@ -43,7 +55,7 @@ const LogInPage: React.FC = () => {
 					<Input
 						id='auth-page-input'
 						placeholder='Password'
-						update={setUserEmail}
+						update={setUserPassword}
 						location='passwordInput'
 						errors={errors}
 					/>
