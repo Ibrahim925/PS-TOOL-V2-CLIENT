@@ -2,17 +2,14 @@ import { combineReducers } from "redux";
 import { UserStateActions, UserStatePayload } from "../types";
 
 // User Reducer
-const userReducer = (action: UserStatePayload, state = {}) => {
-	const { payload } = action;
-	const { type } = action;
-
-	switch (type) {
+const userReducer = (state = {}, action: UserStatePayload) => {
+	switch (action.type) {
 		case UserStateActions.LogIn:
 			return {
-				userId: payload.id,
-				userEmail: payload.userEmail,
-				userType: payload.userType,
-				userProject: payload.userProject,
+				userId: action.payload.id,
+				userEmail: action.payload.userEmail,
+				userType: action.payload.userType,
+				userProject: action.payload.userProject,
 			};
 		default:
 			return state;

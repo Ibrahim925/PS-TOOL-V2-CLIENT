@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = (props) => {
 				}
 			}
 		}
-	});
+	}, [props.errors]);
 
 	return (
 		<div className='form-input-container'>

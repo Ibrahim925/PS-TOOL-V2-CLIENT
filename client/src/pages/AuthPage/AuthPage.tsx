@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Errors, URLS } from "../../types";
+import { Errors, URLS, UserState } from "../../types";
+import { useDispatch } from "react-redux";
+import { USER_LOG_IN } from "../../state/actions";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { register, logIn, request } from "../../helpers/request";
 import { SuccessMessage } from "../../types";
@@ -16,6 +18,7 @@ const LogInPage: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleUserLogIn = async () => {
 		setLoading(true);
@@ -23,17 +26,29 @@ const LogInPage: React.FC = () => {
 		const userLogInResponse = await logIn(userEmail, userPassword);
 		if (Array.isArray(userLogInResponse)) {
 			setErrors(userLogInResponse);
+			setLoading(false);
 		} else if (userLogInResponse.refreshToken) {
 			localStorage.setItem("REFRESH-TOKEN", userLogInResponse.refreshToken);
 
-			const userData = await request("GET", URLS.Resource, "/user", {});
+			const userDataResponse: UserState = await request(
+				"GET",
+				URLS.Resource,
+				"/user",
+				{}
+			);
+
+			setLoading(false);
 
 			// Get user data and store it in global state
-			// Based on user type, navigate to next page
+			dispatch(USER_LOG_IN(userDataResponse));
 
-			// navigate(); <-- TO THE NEXT PAGEEEE
+			// Based on user type, navigate to next page
+			if (userDataResponse.userType === "ADMIN") {
+				navigate("/Admin/ProjectsPage");
+			} else if (userDataResponse.userType === "CUSTOMER") {
+				console.log("CUSTOMER");
+			}
 		}
-		setLoading(false);
 	};
 
 	return (
@@ -46,7 +61,7 @@ const LogInPage: React.FC = () => {
 				<div id='auth-page-form'>
 					<h1 id='auth-page-header'>Log In</h1>
 					<Input
-						id='auth-page-input'
+						id='auth-page-input-1'
 						placeholder='Email'
 						update={setUserEmail}
 						location='emailInput'
@@ -54,7 +69,7 @@ const LogInPage: React.FC = () => {
 						value={userEmail}
 					/>
 					<Input
-						id='auth-page-input'
+						id='auth-page-input-2'
 						placeholder='Password'
 						update={setUserPassword}
 						location='passwordInput'
