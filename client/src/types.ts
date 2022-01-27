@@ -14,4 +14,23 @@ export enum SuccessMessage {
 // Service URLS
 export enum URLS {
 	Auth = "https://ps-tool-v2-auth-service.herokuapp.com",
+	Resource = "https://ps-tool-resource-service.herokuapp.com",
+}
+
+// User reducer actions
+export enum UserStateActions {
+	LogIn = "LOG IN",
+	LogOut = "LOG OUT",
+}
+
+export interface UserState {
+	id: number;
+	userEmail: string;
+	userProject: string | null;
+	userType: "ADMIN" | "CUSTOMER";
+}
+
+export interface UserStatePayload {
+	payload: UserState;
+	type: UserStateActions;
 }

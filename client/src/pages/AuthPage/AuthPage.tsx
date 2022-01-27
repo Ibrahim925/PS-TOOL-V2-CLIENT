@@ -20,13 +20,13 @@ const LogInPage: React.FC = () => {
 	const handleUserLogIn = async () => {
 		setLoading(true);
 		setErrors(null);
-		const response = await logIn(userEmail, userPassword);
-		if (Array.isArray(response)) {
-			setErrors(response);
-		} else if (response.refreshToken) {
-			localStorage.setItem("REFRESH-TOKEN", response.refreshToken);
+		const userLogInResponse = await logIn(userEmail, userPassword);
+		if (Array.isArray(userLogInResponse)) {
+			setErrors(userLogInResponse);
+		} else if (userLogInResponse.refreshToken) {
+			localStorage.setItem("REFRESH-TOKEN", userLogInResponse.refreshToken);
 
-			request("DELETE", URLS.Auth, "jfdslkjfkdls", {});
+			const userData = await request("GET", URLS.Resource, "/user", {});
 
 			// Get user data and store it in global state
 			// Based on user type, navigate to next page
@@ -51,6 +51,7 @@ const LogInPage: React.FC = () => {
 						update={setUserEmail}
 						location='emailInput'
 						errors={errors}
+						value={userEmail}
 					/>
 					<Input
 						id='auth-page-input'
@@ -58,6 +59,8 @@ const LogInPage: React.FC = () => {
 						update={setUserPassword}
 						location='passwordInput'
 						errors={errors}
+						type='password'
+						value={userPassword}
 					/>
 					<Button id='auth-page-button' onClick={handleUserLogIn}>
 						Continue
@@ -86,11 +89,11 @@ const RegisterPage: React.FC = () => {
 		setErrors(null);
 		setLoading(true);
 
-		const response = await register(userEmail);
+		const userRegisterResponse = await register(userEmail);
 
 		// Check if response is an array of errors
-		if (Array.isArray(response)) {
-			setErrors(response);
+		if (Array.isArray(userRegisterResponse)) {
+			setErrors(userRegisterResponse);
 		} else if (SuccessMessage.Success) {
 			setSuccess(true);
 		}
@@ -113,6 +116,7 @@ const RegisterPage: React.FC = () => {
 						update={setUserEmail}
 						errors={errors}
 						location='emailInput'
+						value={userEmail}
 					/>
 					<Button
 						id='auth-page-button'

@@ -13,7 +13,7 @@ export const register = async (userEmail: string) => {
 
 		return data;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 };
 
@@ -30,7 +30,7 @@ export const logIn = async (userEmail: string, userPassword: string) => {
 
 		return data;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 };
 
@@ -71,5 +71,7 @@ export const request = async (
 		});
 
 		return response;
-	} catch (err) {}
+	} catch (err) {
+		console.error(err);
+	}
 };

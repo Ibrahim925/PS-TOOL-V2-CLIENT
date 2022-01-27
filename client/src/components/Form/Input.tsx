@@ -7,6 +7,8 @@ interface InputProps {
 	id: string;
 	location?: string;
 	errors?: Errors | null;
+	value: string;
+	type?: React.HTMLInputTypeAttribute;
 	update: (value: any) => void;
 }
 
@@ -33,6 +35,8 @@ const Input: React.FC<InputProps> = (props) => {
 				onChange={(e) => props.update(e.target.value)}
 				placeholder={props.placeholder}
 				style={error ? { border: "1.5px solid red" } : {}}
+				type={props.type || "text"}
+				value={props.value}
 			/>
 
 			{error && <p className='form-input-error-message'>{error.message}</p>}
