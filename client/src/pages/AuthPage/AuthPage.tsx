@@ -44,7 +44,7 @@ const LogInPage: React.FC = () => {
 
 			// Based on user type, navigate to next page
 			if (userDataResponse.userType === "ADMIN") {
-				navigate("/Admin/ProjectsPage");
+				navigate("/Admin/Projects");
 			} else if (userDataResponse.userType === "CUSTOMER") {
 				console.log("CUSTOMER");
 			}
@@ -161,7 +161,12 @@ const RegisterPage: React.FC = () => {
 const AuthPage: React.FC = () => {
 	const { page } = useParams();
 
-	return page === "LogIn" ? <LogInPage /> : <RegisterPage />;
+	return (
+		<div>
+			{page === "LogIn" && <LogInPage />}
+			{page === "Register" && <RegisterPage />}
+		</div>
+	);
 };
 
 export default AuthPage;

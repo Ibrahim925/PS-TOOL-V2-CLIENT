@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import ProjectsPage from "./pages/admin/ProjectsPage/ProjectsPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { request, requestAccessToken } from "./helpers/request";
 import { URLS, UserState } from "./types";
 import { useDispatch } from "react-redux";
@@ -30,15 +31,18 @@ const App: React.FC = () => {
 
 			if (!refreshToken) {
 				setLoading(false);
-				return navigate("/LogIn");
+				return navigate("/Welcome/LogIn");
 			}
+
+			// Check if resource token is valid by creating an access token with it
 			const accessToken = await requestAccessToken();
 
 			if (typeof accessToken !== "string") {
 				setLoading(false);
-				return navigate("/LogIn");
+				return navigate("/Welcome/LogIn");
 			}
 
+			// Request user data
 			const userDataResponse: UserState = await request(
 				"GET",
 				URLS.Resource,
@@ -46,14 +50,16 @@ const App: React.FC = () => {
 				{}
 			);
 
+			// Put in global state
 			dispatch(USER_LOG_IN(userDataResponse));
 
+			// If the user is already logged in, make sure the user isn't being put on the auth screen
 			const fullPath = location.pathname;
 			const rootPath = fullPath.split("/")[1];
 
 			if (rootPath !== "Admin" && rootPath !== "Customer") {
 				if (userDataResponse.userType === "ADMIN") {
-					navigate("/Admin/ProjectsPage");
+					navigate("/Admin/Projects");
 				} else if (userDataResponse.userType === "CUSTOMER") {
 					console.log("CUSTOMERRR");
 				}
@@ -65,8 +71,8 @@ const App: React.FC = () => {
 
 	if (loading) {
 		return (
-			<Backdrop open={loading}>
-				<CircularProgress style={{ color: "var(--accent)" }} />
+			<Backdrop open={loading} invisible={true}>
+				<CircularProgress style={{ color: "var(--accent)" }} size={70} />
 			</Backdrop>
 		);
 	}
@@ -74,9 +80,10 @@ const App: React.FC = () => {
 	return (
 		<div>
 			<Routes>
-				<Route path='/Admin/ProjectsPage' element={<ProjectsPage />} />
-				<Route path='/:page' element={<AuthPage />} />
-				<Route path='/' element={<Navigate to='/LogIn' />} />
+				<Route path='/Admin/Projects' element={<ProjectsPage />} />
+				<Route path='/Welcome/:page' element={<AuthPage />} />
+				<Route path='/' element={<Navigate to='/Welcome/LogIn' />} />
+				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</div>
 	);

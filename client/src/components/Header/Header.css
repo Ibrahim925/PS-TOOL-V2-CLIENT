@@ -1,0 +1,25 @@
+#header-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: var(--base);
+	padding: 15px;
+	height: 65px;
+}
+
+#header-logo-container {
+	margin-left: 5px;
+	position: relative;
+	cursor: pointer;
+	width: fit-content;
+}
+
+#header-logo-text {
+	color: white;
+	display: inline;
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	margin-left: 10px;
+}

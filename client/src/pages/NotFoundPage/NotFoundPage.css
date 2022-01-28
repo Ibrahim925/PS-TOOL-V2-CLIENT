@@ -1,0 +1,7 @@
+#page-not-found-image {
+	position: absolute;
+	left: 50%;
+	top: 400%;
+	transform: translateX(-50%);
+	margin-top: 30px;
+}
