@@ -16,16 +16,20 @@
 	min-width: 300px;
 	max-width: 700px;
 	display: block;
+	border-radius: 2px;
+	border: none;
 }
 
 .form-button {
 	background-color: var(--accent);
 	border: none;
 	color: white;
-	padding: 10px 20px;
+	padding: 8px 15px;
 	cursor: pointer;
 	transition: 0.3s;
 	display: block;
+	position: relative;
+	border-radius: 2px;
 }
 
 .form-button:hover {
@@ -36,4 +40,19 @@
 	opacity: 70%;
 	cursor: no-drop;
 	transform: scale(1);
+}
+
+.form-button-children-with-icon {
+	float: left;
+	margin-top: 5px;
+}
+
+.form-button-icon {
+	float: left;
+	margin-top: 3px;
+	margin-left: 5px;
+}
+
+.form-popup-menu-header {
+	margin: 20px auto;
 }

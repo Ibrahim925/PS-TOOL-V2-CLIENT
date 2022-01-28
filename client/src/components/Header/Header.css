@@ -29,9 +29,17 @@
 	margin-left: 10px;
 }
 
+#header-menu-button {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: white;
+}
+
 #header-right {
 	position: absolute;
-	right: 0;
+	right: 80px;
 	top: 50%;
 	transform: translateY(-50%);
 }
