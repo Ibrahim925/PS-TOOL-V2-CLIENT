@@ -1,4 +1,5 @@
 #header-container {
+	position: relative;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -6,6 +7,10 @@
 	background-color: var(--base);
 	padding: 15px;
 	height: 65px;
+}
+
+#header-content {
+	position: relative;
 }
 
 #header-logo-container {
@@ -22,4 +27,18 @@
 	top: 50%;
 	margin-top: -20px;
 	margin-left: 10px;
+}
+
+#header-right {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+#header-middle {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-20%);
 }
