@@ -11,7 +11,7 @@ import ProjectsPage from "./pages/admin/ProjectsPage/ProjectsPage";
 import AdminProjectPage from "./pages/admin/AdminProjectPage/AdminProjectPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { request, requestAccessToken } from "./helpers/request";
-import { URLS, UserState } from "./types";
+import { URLS, IUser } from "./types";
 import { useDispatch } from "react-redux";
 import { USER_LOG_IN } from "./state/actions";
 import { Backdrop, CircularProgress } from "@mui/material";
@@ -43,7 +43,7 @@ const App: React.FC = () => {
 			}
 
 			// Request user data
-			const userDataResponse: UserState = await request(
+			const userDataResponse: IUser = await request(
 				"GET",
 				URLS.Resource,
 				"/user",
@@ -81,7 +81,7 @@ const App: React.FC = () => {
 		<div>
 			<Routes>
 				<Route
-					path='/Admin/Projects/:projectName'
+					path='/Admin/Projects/:projectName/:page'
 					element={<AdminProjectPage />}
 				/>
 				<Route path='/Admin/Projects' element={<ProjectsPage />} />

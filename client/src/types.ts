@@ -23,7 +23,7 @@ export enum UserStateActions {
 	LogOut = "LOG OUT",
 }
 
-export interface UserState {
+export interface IUser {
 	id: number;
 	userEmail: string;
 	userProject: string | null;
@@ -31,7 +31,7 @@ export interface UserState {
 }
 
 export interface UserStatePayload {
-	payload: UserState;
+	payload: IUser;
 	type: UserStateActions;
 }
 
@@ -46,4 +46,13 @@ export interface IProject {
 	id: number;
 	projectName: string;
 	projectVersion: Versions;
+}
+
+// Notification
+export interface INotification {
+	id: number;
+	notificationDate: string;
+	notificationTime: string;
+	notificationText: string;
+	notificationProject: string;
 }

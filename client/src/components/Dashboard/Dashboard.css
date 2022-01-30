@@ -1,0 +1,84 @@
+#dashboard-container {
+	display: grid;
+	grid-template-areas: "INBOX USERS";
+	overflow-y: scroll;
+}
+
+.dashboard-section {
+	background-color: var(--foreground);
+	border-radius: 15px;
+	height: 75vh;
+	width: 80%;
+	margin: 55px auto;
+	box-shadow: var(--shadow);
+	position: relative;
+}
+
+.dasboard-section-header {
+	margin: 40px 0px 15px 40px;
+	padding: 0;
+	font-size: 30px;
+}
+
+#dashboard-section-scrollable-content {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 85%;
+	overflow-y: scroll;
+	height: 85%;
+}
+
+#dashboard-section-scrollable-content-empty {
+	position: absolute;
+	top: 36%;
+	left: 50%;
+	transform: translateX(-50%);
+	color: rgb(122, 122, 122);
+}
+
+#inbox-section {
+	margin-right: 10px;
+}
+
+#users-section {
+	margin-left: 10px;
+}
+
+#notification-container {
+	background-color: var(--foreground-content);
+	box-shadow: var(--shadow);
+	width: 80%;
+	padding: 10px;
+	margin: 15px auto;
+	border-radius: 15px;
+}
+
+#notification-text {
+}
+
+#notification-time {
+	color: rgb(122, 122, 122);
+}
+
+#user-container {
+	background-color: var(--foreground-content);
+	box-shadow: var(--shadow);
+	width: 80%;
+	height: 80px;
+	padding: 10px;
+	margin: 15px auto;
+	border-radius: 15px;
+	position: relative;
+}
+
+#user-actions {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+#user-email {
+	position: absolute;
+	top: 25%;
+}

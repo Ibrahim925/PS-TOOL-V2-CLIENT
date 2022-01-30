@@ -42,7 +42,7 @@ const Project: React.FC<IProject> = (props) => {
 	const navigate = useNavigate();
 
 	const handleProjectClick = () => {
-		navigate(`/Admin/Projects/${props.projectName}`);
+		navigate(`/Admin/Projects/${props.projectName}/Dashboard`);
 	};
 	return <Item onClick={handleProjectClick}>{props.projectName}</Item>;
 };

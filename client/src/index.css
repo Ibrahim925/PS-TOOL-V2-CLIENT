@@ -13,6 +13,7 @@
 	--white: white;
 	--accent: #ff00e5;
 	--foreground: #f0f0f0;
+	--foreground-content: #e2e2e2;
 
 	--base-font: regular;
 
@@ -41,4 +42,10 @@ a {
 	position: relative;
 	height: calc(100vh - 65px);
 	width: 100vw;
+}
+
+.page-with-sidebar {
+	position: absolute;
+	right: 0;
+	width: 80%;
 }

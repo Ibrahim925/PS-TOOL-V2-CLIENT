@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Errors, URLS, UserState } from "../../types";
+import { Errors, URLS, IUser } from "../../types";
 import { useDispatch } from "react-redux";
 import { USER_LOG_IN } from "../../state/actions";
 import { useParams, Link, useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const LogInPage: React.FC = () => {
 		} else if (userLogInResponse.refreshToken) {
 			localStorage.setItem("REFRESH-TOKEN", userLogInResponse.refreshToken);
 
-			const userDataResponse: UserState = await request(
+			const userDataResponse: IUser = await request(
 				"GET",
 				URLS.Resource,
 				"/user",

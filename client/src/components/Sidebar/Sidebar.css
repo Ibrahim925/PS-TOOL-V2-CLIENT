@@ -1,0 +1,36 @@
+#sidebar-container {
+	width: 20%;
+	position: absolute;
+	bottom: 0;
+	top: 95px;
+	left: 0;
+	background-color: var(--foreground);
+	overflow-y: scroll;
+}
+
+#sidebar-accordion {
+	border: none;
+	background-color: var(--foreground);
+	box-shadow: none;
+}
+
+#sidebar-accordion-summary-text {
+	margin-left: 10px;
+}
+
+#sidebar-project-name-header {
+	margin-left: 10px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+#sidebar-accordion-details {
+	padding: 20px;
+	width: calc(100%-20px);
+	cursor: pointer;
+	transition: 0.5s ease;
+}
+
+#sidebar-accordion-details:hover {
+	background-color: var(--foreground-content);
+}

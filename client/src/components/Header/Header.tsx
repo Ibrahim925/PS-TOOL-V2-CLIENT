@@ -3,7 +3,7 @@ import Logo from "../Logo/Logo";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { UserState } from "../../types";
+import { IUser } from "../../types";
 import { Menu } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-	const userState: UserState = useSelector((state: any) => state.userReducer);
+	const userState: IUser = useSelector((state: any) => state.userReducer);
 	const navigate = useNavigate();
 
 	const handleHeaderLogoClick = () => {
