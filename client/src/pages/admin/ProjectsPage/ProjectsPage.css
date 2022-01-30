@@ -1,0 +1,33 @@
+#projects-page-pop-up-form {
+	text-align: center;
+}
+
+#projects-page-popup-input {
+	margin-top: 30px;
+	margin-bottom: 35px;
+	width: fit-content;
+}
+
+#projects-page-popup-select {
+	margin: auto;
+	width: fit-content;
+}
+
+#projects-page-popup-button {
+	margin: auto;
+	margin-top: 40px;
+}
+
+#no-projects-message {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	color: grey;
+}
+
+#projects-container {
+	margin: 30px auto;
+	padding: 30px;
+	width: 90%;
+}

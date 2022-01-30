@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import ProjectsPage from "./pages/admin/ProjectsPage/ProjectsPage";
+import AdminProjectPage from "./pages/admin/AdminProjectPage/AdminProjectPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { request, requestAccessToken } from "./helpers/request";
 import { URLS, UserState } from "./types";
@@ -17,7 +18,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import "./index.css";
 
 const App: React.FC = () => {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		(async () => {
-			setLoading(true);
 			// Check if there is a refresh token
 			const refreshToken = localStorage.getItem("REFRESH-TOKEN");
 
@@ -80,6 +80,10 @@ const App: React.FC = () => {
 	return (
 		<div>
 			<Routes>
+				<Route
+					path='/Admin/Projects/:projectName'
+					element={<AdminProjectPage />}
+				/>
 				<Route path='/Admin/Projects' element={<ProjectsPage />} />
 				<Route path='/Welcome/:page' element={<AuthPage />} />
 				<Route path='/' element={<Navigate to='/Welcome/LogIn' />} />

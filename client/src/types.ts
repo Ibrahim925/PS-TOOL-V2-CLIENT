@@ -34,3 +34,16 @@ export interface UserStatePayload {
 	payload: UserState;
 	type: UserStateActions;
 }
+
+// Project versions
+export enum Versions {
+	V9 = "V9",
+	V10 = "V10",
+}
+
+// Project
+export interface IProject {
+	id: number;
+	projectName: string;
+	projectVersion: Versions;
+}

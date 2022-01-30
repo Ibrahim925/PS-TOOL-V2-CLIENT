@@ -2,18 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Errors, Error } from "../../types";
 import "./Form.css";
 
-interface InputProps {
-	placeholder?: string;
-	label?: string;
+interface SelectProps {
 	id: string;
-	location?: string;
+	options: any[];
+	placeholder: string;
 	errors?: Errors | null;
-	value: string;
-	type?: React.HTMLInputTypeAttribute;
+	location?: string;
 	update: (value: any) => void;
 }
 
-const Input: React.FC<InputProps> = (props) => {
+const Select: React.FC<SelectProps> = (props) => {
 	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
@@ -29,19 +27,25 @@ const Input: React.FC<InputProps> = (props) => {
 	}, [props.errors]);
 
 	return (
-		<div className='form-input-container' id={props.id}>
-			{props.label && <p className='form-input-label'>{props.label}</p>}
-			<input
-				className='form-input'
-				placeholder={props.placeholder ? props.placeholder : ""}
+		<div id={props.id} className='form-select-container'>
+			<select
+				className='form-select'
 				onChange={(e) => props.update(e.target.value)}
-				style={error ? { border: "1.5px solid red" } : {}}
-				type={props.type || "text"}
-				value={props.value}
-			/>
-
+				style={error ? { border: "1.5px solid red" } : {}}>
+				<option disabled defaultValue={1} value=''>
+					{props.placeholder}
+				</option>
+				{props.options.map((option) => {
+					return (
+						<option key={option} value={option}>
+							{option}
+						</option>
+					);
+				})}
+			</select>
 			{error && <p className='form-input-error-message'>{error.message}</p>}
 		</div>
 	);
 };
-export default Input;
+
+export default Select;

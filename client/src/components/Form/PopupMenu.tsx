@@ -2,10 +2,10 @@ import React from "react";
 import { Dialog } from "@mui/material";
 
 const popupMenuStyles: React.CSSProperties = {
-	backgroundColor: "var(--base)",
+	backgroundColor: "var(--white)",
 	height: 800,
 	width: 800,
-	color: "white",
+	color: "black",
 };
 
 interface PopupMenuProps {
