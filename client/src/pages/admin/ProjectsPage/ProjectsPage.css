@@ -3,14 +3,13 @@
 }
 
 #projects-page-popup-input {
-	margin-top: 30px;
+	margin: auto;
+	margin-top: 40px;
 	margin-bottom: 35px;
-	width: fit-content;
 }
 
 #projects-page-popup-select {
 	margin: auto;
-	width: fit-content;
 }
 
 #projects-page-popup-button {

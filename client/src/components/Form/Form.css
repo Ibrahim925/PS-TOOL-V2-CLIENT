@@ -1,10 +1,7 @@
 /* Form Input */
 .form-input-container {
 	position: relative;
-	margin-bottom: 50px;
 	width: fit-content;
-	padding: 5px;
-	margin: auto;
 }
 
 .form-input-error-message {
@@ -22,7 +19,7 @@
 .form-input {
 	padding: 9px;
 	width: 50%;
-	min-width: 300px;
+	min-width: 285px;
 	max-width: 700px;
 	display: block;
 	border-radius: 2px;
@@ -80,8 +77,5 @@
 
 .form-select-container {
 	position: relative;
-	margin-bottom: 50px;
 	width: fit-content;
-	padding: 5px;
-	margin: auto;
 }

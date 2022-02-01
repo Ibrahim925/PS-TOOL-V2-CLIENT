@@ -20,6 +20,12 @@
 	font-size: 30px;
 }
 
+.dashboard-section-actions {
+	position: absolute;
+	right: 30px;
+	top: 40px;
+}
+
 #dashboard-section-scrollable-content {
 	position: absolute;
 	left: 50%;
@@ -35,6 +41,7 @@
 	left: 50%;
 	transform: translateX(-50%);
 	color: rgb(122, 122, 122);
+	text-align: center;
 }
 
 #inbox-section {
@@ -81,4 +88,14 @@
 #user-email {
 	position: absolute;
 	top: 25%;
+}
+
+#dashboard-popup-input {
+	margin: auto;
+	margin-top: 35px;
+}
+
+#dashboard-popup-button {
+	margin: auto;
+	margin-top: 60px;
 }

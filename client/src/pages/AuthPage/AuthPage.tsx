@@ -61,7 +61,7 @@ const LogInPage: React.FC = () => {
 				<div id='auth-page-form'>
 					<h1 id='auth-page-header'>Log In</h1>
 					<Input
-						id='auth-page-input-1'
+						id='auth-page-input'
 						placeholder='Email'
 						update={setUserEmail}
 						location='emailInput'
@@ -69,7 +69,7 @@ const LogInPage: React.FC = () => {
 						value={userEmail}
 					/>
 					<Input
-						id='auth-page-input-2'
+						id='auth-page-input'
 						placeholder='Password'
 						update={setUserPassword}
 						location='passwordInput'
@@ -80,7 +80,7 @@ const LogInPage: React.FC = () => {
 					<Button id='auth-page-button' onClick={handleUserLogIn}>
 						Continue
 					</Button>
-					<Link to='/Register'>Don't have an account?</Link>
+					<Link to='/Welcome/Register'>Don't have an account?</Link>
 					{loading && (
 						<CircularProgress
 							style={{ color: "white", marginTop: 40 }}
@@ -139,7 +139,7 @@ const RegisterPage: React.FC = () => {
 						disabled={loading}>
 						Continue
 					</Button>
-					<Link to='/LogIn'>Already have an account?</Link>
+					<Link to='/Welcome/LogIn'>Already have an account?</Link>
 					{loading && (
 						<CircularProgress
 							style={{ color: "white", marginTop: 40 }}
