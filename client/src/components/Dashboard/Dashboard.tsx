@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Delete, Mail, Add } from "@mui/icons-material";
 import { IconButton, Tooltip, CircularProgress, Backdrop } from "@mui/material";
 import { Errors, INotification, IUser, URLS } from "../../types";
+import Loading from "../Loading/Loading";
 import PopupMenu from "../Form/PopupMenu";
 import Logo from "../Logo/Logo";
 import Input from "../Form/Input";
@@ -103,11 +104,7 @@ const Dashboard: React.FC = () => {
 	}, []);
 
 	if (getDashboardDataLoading) {
-		return (
-			<Backdrop open={getDashboardDataLoading} invisible={true}>
-				<CircularProgress style={{ color: "var(--accent)" }} size={70} />
-			</Backdrop>
-		);
+		return <Loading isOpen={getDashboardDataLoading} />;
 	}
 
 	return (

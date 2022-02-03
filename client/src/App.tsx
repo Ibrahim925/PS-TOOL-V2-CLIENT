@@ -6,6 +6,7 @@ import {
 	useNavigate,
 	useLocation,
 } from "react-router-dom";
+import Loading from "./components/Loading/Loading";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import ProjectsPage from "./pages/admin/ProjectsPage/ProjectsPage";
 import AdminProjectPage from "./pages/admin/AdminProjectPage/AdminProjectPage";
@@ -14,7 +15,6 @@ import { request, requestAccessToken } from "./helpers/request";
 import { URLS, IUser } from "./types";
 import { useDispatch } from "react-redux";
 import { USER_LOG_IN } from "./state/actions";
-import { Backdrop, CircularProgress } from "@mui/material";
 import "./index.css";
 
 const App: React.FC = () => {
@@ -37,7 +37,7 @@ const App: React.FC = () => {
 			// Check if resource token is valid by creating an access token with it
 			const accessToken = await requestAccessToken();
 
-			if (typeof accessToken !== "string") {
+			if (!accessToken) {
 				setLoading(false);
 				return navigate("/Welcome/LogIn");
 			}
@@ -70,11 +70,7 @@ const App: React.FC = () => {
 	}, []);
 
 	if (loading) {
-		return (
-			<Backdrop open={loading} invisible={true}>
-				<CircularProgress style={{ color: "var(--accent)" }} size={70} />
-			</Backdrop>
-		);
+		return <Loading isOpen={loading} />;
 	}
 
 	return (

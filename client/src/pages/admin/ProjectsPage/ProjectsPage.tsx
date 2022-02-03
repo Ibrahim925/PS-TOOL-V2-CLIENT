@@ -6,14 +6,8 @@ import Select from "../../../components/Form/Select";
 import PopupMenu from "../../../components/Form/PopupMenu";
 import Logo from "../../../components/Logo/Logo";
 import { Add } from "@mui/icons-material";
-import {
-	CircularProgress,
-	Backdrop,
-	Grid,
-	Box,
-	Paper,
-	styled,
-} from "@mui/material";
+import Loading from "../../../components/Loading/Loading";
+import { CircularProgress, Grid, Box, Paper, styled } from "@mui/material";
 import "./ProjectsPage.css";
 import { Errors, URLS, IProject } from "../../../types";
 import { request } from "../../../helpers/request";
@@ -110,11 +104,7 @@ const ProjectsPage: React.FC = () => {
 	}, []);
 
 	if (getProjectsLoading) {
-		return (
-			<Backdrop open={getProjectsLoading} invisible={true}>
-				<CircularProgress style={{ color: "var(--accent)" }} size={70} />
-			</Backdrop>
-		);
+		return <Loading isOpen={getProjectsLoading} />;
 	}
 
 	return (
