@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Delete, Mail, Add } from "@mui/icons-material";
-import { IconButton, Tooltip, CircularProgress, Backdrop } from "@mui/material";
+import { IconButton, Tooltip, CircularProgress } from "@mui/material";
 import { Errors, INotification, IUser, URLS } from "../../types";
 import Loading from "../Loading/Loading";
 import PopupMenu from "../Form/PopupMenu";
@@ -24,14 +24,13 @@ const Notification: React.FC<INotification> = (props) => {
 };
 
 // Users
-const User: React.FC<IUser> = (props) => {
-	const handleUserDelete = () => {
-		// TODO: IMPLEMENT USER DELETION IN DASHBOARD COMPONENT
-	};
+interface UserProps extends IUser {
+	handleDelete: (id: number) => void;
+}
 
+const User: React.FC<UserProps> = (props) => {
 	const handleUserEmail = () => {
 		const emailLink = `https://mail.google.com/mail/?view=cm&source=mailto&to=${props.userEmail}`;
-		console.log(emailLink);
 		window.open(emailLink, "_blank");
 	};
 
@@ -40,12 +39,12 @@ const User: React.FC<IUser> = (props) => {
 			<p id='user-email'>{props.userEmail}</p>
 			<div id='user-actions'>
 				<Tooltip title='Delete'>
-					<IconButton>
+					<IconButton onClick={() => props.handleDelete(props.id)}>
 						<Delete />
 					</IconButton>
 				</Tooltip>
-				<Tooltip title='Email' onClick={handleUserEmail}>
-					<IconButton>
+				<Tooltip title='Email'>
+					<IconButton onClick={handleUserEmail}>
 						<Mail />
 					</IconButton>
 				</Tooltip>
@@ -69,6 +68,7 @@ const Dashboard: React.FC = () => {
 		setShowAddUserForm(false);
 		setUserEmail("");
 		setErrors([]);
+		setUserCreateLoading(false);
 	};
 
 	const handleUserCreate = async () => {
@@ -86,6 +86,20 @@ const Dashboard: React.FC = () => {
 
 		setUsers([...users, userCreateResponse]);
 		handleAddUserFormClose();
+	};
+
+	const handleUserDelete = async (id: number) => {
+		const isOk = window.confirm(
+			"Are you sure?\nThis action is not reversible!"
+		);
+
+		if (!isOk) return;
+
+		try {
+			await request("DELETE", URLS.Resource, `/user/${id}`, {});
+
+			setUsers(users.filter((user) => user.id !== id));
+		} catch (error) {}
 	};
 
 	useEffect(() => {
@@ -134,7 +148,9 @@ const Dashboard: React.FC = () => {
 				</div>
 				<div id='dashboard-section-scrollable-content'>
 					{users.length ? (
-						users.map((user) => <User key={user.id} {...user} />)
+						users.map((user) => (
+							<User key={user.id} {...user} handleDelete={handleUserDelete} />
+						))
 					) : (
 						<p id='dashboard-section-scrollable-content-empty'>No Users</p>
 					)}
