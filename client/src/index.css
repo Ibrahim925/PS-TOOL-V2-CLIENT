@@ -49,3 +49,21 @@ a {
 	right: 0;
 	width: 80%;
 }
+
+/* Scrollbar styles */
+/* width */
+::-webkit-scrollbar {
+	width: 2px;
+	height: 2px;
+	position: absolute;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgb(219, 219, 219);
+}
