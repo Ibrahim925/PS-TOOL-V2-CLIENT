@@ -32,7 +32,7 @@ const Select: React.FC<SelectProps> = (props) => {
 				className='form-select'
 				onChange={(e) => props.update(e.target.value)}
 				style={error ? { border: "1.5px solid red" } : {}}>
-				<option disabled defaultValue={1} value=''>
+				<option disabled selected hidden value=''>
 					{props.placeholder}
 				</option>
 				{props.options.map((option) => {

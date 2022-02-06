@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import Input from "../../../components/Form/Input";
 import Header from "../../../components/Header/Header";
 import Button from "../../../components/Form/Button";
@@ -7,7 +7,15 @@ import PopupMenu from "../../../components/Form/PopupMenu";
 import Logo from "../../../components/Logo/Logo";
 import { Add } from "@mui/icons-material";
 import Loading from "../../../components/Loading/Loading";
-import { CircularProgress, Grid, Box, Paper, styled } from "@mui/material";
+import {
+	CircularProgress,
+	Grid,
+	Box,
+	Paper,
+	styled,
+	Menu,
+	MenuItem,
+} from "@mui/material";
 import "./ProjectsPage.css";
 import { Errors, URLS, IProject } from "../../../types";
 import { request } from "../../../helpers/request";
@@ -32,13 +40,83 @@ const Item = styled(Paper)(({ theme }) => ({
 	},
 }));
 
-const Project: React.FC<IProject> = (props) => {
+interface ProjectProps extends IProject {
+	setProjects: (callBack: (prev: any) => any) => void;
+}
+
+const Project: React.FC<ProjectProps> = (props) => {
 	const navigate = useNavigate();
+
+	const [contextMenu, setContextMenu] = useState<{
+		mouseX: number;
+		mouseY: number;
+	} | null>(null);
+
+	const handleContextMenu = (event: any) => {
+		event.preventDefault();
+		setContextMenu(
+			contextMenu === null
+				? {
+						mouseX: event.clientX - 2,
+						mouseY: event.clientY - 4,
+				  }
+				: null
+		);
+	};
 
 	const handleProjectClick = () => {
 		navigate(`/Admin/Projects/${props.projectName}/Dashboard`);
 	};
-	return <Item onClick={handleProjectClick}>{props.projectName}</Item>;
+
+	const handleProjectDelete = async () => {
+		const isOk = window.confirm(
+			"Are you sure?\nThis action is not reversible!"
+		);
+
+		if (!isOk) {
+			return setContextMenu(null);
+		}
+
+		const projectDeleteResponse = await request(
+			"DELETE",
+			URLS.Resource,
+			`/project/${props.projectName}`,
+			{}
+		);
+
+		props.setProjects((projects) =>
+			projects.filter(
+				(project: any) => project.projectName !== projectDeleteResponse
+			)
+		);
+
+		setContextMenu(null);
+	};
+
+	return (
+		<div>
+			<Item
+				onClick={handleProjectClick}
+				onContextMenu={(e) => handleContextMenu(e)}>
+				{props.projectName}
+			</Item>
+			<Menu
+				anchorReference='anchorPosition'
+				anchorPosition={
+					contextMenu !== null
+						? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+						: undefined
+				}
+				open={contextMenu !== null}
+				onClose={() => setContextMenu(null)}
+				PaperProps={{
+					style: { backgroundColor: "whitesmoke" },
+				}}>
+				<MenuItem onClick={handleProjectClick}>Enter</MenuItem>
+				<MenuItem onClick={handleProjectDelete}>Delete</MenuItem>
+			</Menu>
+		</div>
+	);
 };
 
 const ProjectsPage: React.FC = () => {
@@ -79,7 +157,7 @@ const ProjectsPage: React.FC = () => {
 
 		setProjects([...projects, projectAddResponse]);
 		setCreateProjectLoading(false);
-		setShowAddProjectForm(false);
+		handlePopupClose();
 	};
 
 	useEffect(() => {
@@ -172,7 +250,7 @@ const ProjectsPage: React.FC = () => {
 									.toLowerCase()
 									.includes(searchQuery.toLowerCase()) ? (
 									<Grid item xs={5} md={3} key={key}>
-										<Project {...project} key={key} />
+										<Project {...project} key={key} setProjects={setProjects} />
 									</Grid>
 								) : null
 							)}
