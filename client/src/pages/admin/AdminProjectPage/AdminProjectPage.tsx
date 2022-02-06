@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../../components/Header/Header";
 import Dashboard from "../../../components/Dashboard/Dashboard";
-// import ObjectView from "./ObjectView";
+import ObjectView from "../../../components/ObjectView/ObjectView";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/Form/Button";
@@ -38,12 +38,7 @@ const AdminProjectPage: React.FC = () => {
 					toggleOpen={setShowConfigUploadDrawer}
 				/>
 
-				{page === "Dashboard" ? (
-					<Dashboard />
-				) : (
-					// <ObjectView accountType={accountType} page={page} />
-					"OBJECT: " + page
-				)}
+				{page === "Dashboard" ? <Dashboard /> : <ObjectView />}
 			</div>
 		</div>
 	);
