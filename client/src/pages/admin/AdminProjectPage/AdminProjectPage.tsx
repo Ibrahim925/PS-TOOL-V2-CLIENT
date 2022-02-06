@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../components/Header/Header";
 import Dashboard from "../../../components/Dashboard/Dashboard";
 import ObjectView from "../../../components/ObjectView/ObjectView";
@@ -8,15 +8,34 @@ import Button from "../../../components/Form/Button";
 import { Add } from "@mui/icons-material";
 import "./AdminProjectPage.css";
 import ConfigUploadDrawer from "../../../components/ConfigUploadDrawer/ConfigUploadDrawer";
-import { LogiObject } from "../../../types";
+import { LogiObject, URLS } from "../../../types";
+import NotFoundPage from "../../NotFoundPage/NotFoundPage";
+import { request } from "../../../helpers/request";
 
 const AdminProjectPage: React.FC = () => {
-	const { page } = useParams();
+	const { page, projectName } = useParams();
 
 	const [showConfigUploadDrawer, setShowConfigUploadDrawer] = useState(false);
 	const [objects, setObjects] = useState<LogiObject[]>([]);
 
-	return (
+	useEffect(() => {
+		(async () => {
+			const getObjectsResponse: LogiObject[] = await request(
+				"GET",
+				URLS.Resource,
+				`/rule/object/${projectName}`,
+				{}
+			);
+
+			setObjects(getObjectsResponse);
+		})();
+	}, []);
+
+	return page &&
+		!objects.map((object) => object.objectName).includes(page) &&
+		page !== "Dashboard" ? (
+		<NotFoundPage />
+	) : (
 		<div>
 			<Header
 				Right={
@@ -29,7 +48,7 @@ const AdminProjectPage: React.FC = () => {
 				}
 			/>
 
-			<Sidebar objects={objects} setObjects={setObjects} />
+			<Sidebar objects={objects} />
 			<div id='projectPage' className='page-with-header page-with-sidebar'>
 				<ConfigUploadDrawer
 					isOpen={showConfigUploadDrawer}
@@ -38,7 +57,11 @@ const AdminProjectPage: React.FC = () => {
 					toggleOpen={setShowConfigUploadDrawer}
 				/>
 
-				{page === "Dashboard" ? <Dashboard /> : <ObjectView />}
+				{page === "Dashboard" ? (
+					<Dashboard />
+				) : (
+					<ObjectView objects={objects} object={page} />
+				)}
 			</div>
 		</div>
 	);

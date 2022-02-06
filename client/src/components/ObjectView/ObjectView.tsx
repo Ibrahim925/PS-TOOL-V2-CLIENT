@@ -1,12 +1,18 @@
 import React from "react";
+import { LogiObject } from "../../types";
+import { useNavigate } from "react-router-dom";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 
-const ObjectView: React.FC = () => {
+interface ObjectViewProps {
+	objects: LogiObject[];
+	object?: string;
+}
+
+const ObjectView: React.FC<ObjectViewProps> = (props) => {
 	return (
 		<div
 			// className='page-with-header page-with-sidebar'
-			id='object-view-container'>
-			HIJFKLDSJFKLDSJFKLDSJFKLSDJKLFJLDSJFKLSDJFKLD
-		</div>
+			id='object-view-container'></div>
 	);
 };
 

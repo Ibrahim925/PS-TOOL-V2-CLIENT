@@ -30,26 +30,12 @@ const AccordionSummary = styled((props) => (
 
 interface SidebarProps {
 	objects: LogiObject[];
-	setObjects: (value: any) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
 	const { projectName, page } = useParams();
 	const navigate = useNavigate();
 	const basePath = `/Admin/Projects/${projectName}`;
-
-	useEffect(() => {
-		(async () => {
-			const getObjectsResponse: LogiObject[] = await request(
-				"GET",
-				URLS.Resource,
-				`/rule/object/${projectName}`,
-				{}
-			);
-
-			props.setObjects(getObjectsResponse);
-		})();
-	}, []);
 
 	const handleDashboardClick = () => {
 		navigate(`${basePath}/Dashboard`);

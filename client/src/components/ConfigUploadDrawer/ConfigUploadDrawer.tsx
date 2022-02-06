@@ -114,6 +114,7 @@ const ConfigUploadDrawer: React.FC<ConfigUploadDrawerProps> = (props) => {
 								rules={rules.filter(
 									(rule: Rule) => rule.object === object.objectName
 								)}
+								key={key}
 							/>
 						);
 				  })
