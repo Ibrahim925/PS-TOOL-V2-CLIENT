@@ -28,12 +28,15 @@ const AccordionSummary = styled((props) => (
 	},
 }));
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+	objects: LogiObject[];
+	setObjects: (value: any) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = (props) => {
 	const { projectName, page } = useParams();
 	const navigate = useNavigate();
 	const basePath = `/Admin/Projects/${projectName}`;
-
-	const [objects, setObjects] = useState<LogiObject[]>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -44,9 +47,7 @@ const Sidebar: React.FC = () => {
 				{}
 			);
 
-			// TODO: DISPLAY OBJECTS AND DISPLAY RULES ON LOAD
-			console.log("RUNNING");
-			setObjects(getObjectsResponse);
+			props.setObjects(getObjectsResponse);
 		})();
 	}, []);
 
@@ -75,7 +76,7 @@ const Sidebar: React.FC = () => {
 							{config}
 						</Typography>
 					</AccordionSummary>
-					{objects.map((object) =>
+					{props.objects.map((object) =>
 						object.objectConfig + " Configuration" === config ? (
 							<AccordionDetails
 								id='sidebar-accordion-details'

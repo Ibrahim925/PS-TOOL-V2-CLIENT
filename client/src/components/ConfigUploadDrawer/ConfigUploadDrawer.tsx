@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UploadCSVInput from "../UploadCSVInput/UploadCSVInput";
-import { Error, Errors, Rules } from "../../types";
+import { Error, Errors, LogiObject, Rule, Rules } from "../../types";
 import "./ConfigUploadDrawer.css";
 
 // Material UI
@@ -9,9 +9,12 @@ import { request } from "../../helpers/request";
 import { URLS } from "../../types";
 import { useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import DataTable from "../DataTable/DataTable";
 
 interface ConfigUploadDrawerProps {
 	isOpen: boolean;
+	objects: LogiObject[];
+	setObjects: (value: any) => void;
 	toggleOpen: (value: boolean) => void;
 }
 
@@ -25,6 +28,17 @@ const ConfigUploadDrawer: React.FC<ConfigUploadDrawerProps> = (props) => {
 
 	useEffect(() => {
 		(async () => {
+			// GET PROJECT RULES
+
+			const getRulesResponse = await request(
+				"GET",
+				URLS.Resource,
+				`/rule/${projectName}`,
+				{}
+			);
+
+			setRules(getRulesResponse);
+
 			setLoading(false);
 		})();
 	}, []);
@@ -47,15 +61,16 @@ const ConfigUploadDrawer: React.FC<ConfigUploadDrawerProps> = (props) => {
 			const csvText = e.target.result;
 
 			// Save rules
-			const uploadCSVRulesResponse: Rules | Errors = await request(
+			const uploadCSVRulesResponse = await request(
 				"POST",
 				URLS.Resource,
 				"/rule",
 				{ projectName, csvText }
 			);
 
-			if (!("message" in uploadCSVRulesResponse[0])) {
-				setRules(uploadCSVRulesResponse);
+			if (!Array.isArray(uploadCSVRulesResponse)) {
+				setRules(uploadCSVRulesResponse.csvJSON);
+				props.setObjects(uploadCSVRulesResponse.objectNames);
 			} else {
 				setErrors(uploadCSVRulesResponse);
 			}
@@ -82,13 +97,24 @@ const ConfigUploadDrawer: React.FC<ConfigUploadDrawerProps> = (props) => {
 			) : (
 				<Loading isOpen={loading} />
 			)}
-
 			{errors.length
 				? errors.map((error: Error, key: number) => {
 						return (
 							<h2 id='config-upload-drawer-error' key={key}>
 								{error.message}
 							</h2>
+						);
+				  })
+				: null}
+			{props.objects.length && !loading && !errors.length
+				? props.objects.map((object: LogiObject, key: number) => {
+						return (
+							<DataTable
+								object={object}
+								rules={rules.filter(
+									(rule: Rule) => rule.object === object.objectName
+								)}
+							/>
 						);
 				  })
 				: null}

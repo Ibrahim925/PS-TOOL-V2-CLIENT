@@ -89,6 +89,7 @@ export interface Rule {
 	case: Cases;
 	required: boolean;
 	dependency: string;
+	[rule: string]: any;
 }
 
 export interface LogiObject {

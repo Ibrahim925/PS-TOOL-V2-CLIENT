@@ -6,4 +6,6 @@
 
 	transform: translateX(-50%) translateY(-60%);
 	opacity: 50%;
+
+	overflow-y: scroll;
 }
