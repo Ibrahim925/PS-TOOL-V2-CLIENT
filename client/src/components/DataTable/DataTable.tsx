@@ -21,9 +21,11 @@ interface DataTableProps {
 const DataTable: React.FC<DataTableProps> = (props) => {
 	return (
 		<div id='data-table-container'>
-			<TableContainer component={Paper}>
+			<TableContainer
+				component={Paper}
+				style={{ backgroundColor: "var(--foreground)" }}>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
-					<TableHead>
+					<TableHead style={{ backgroundColor: "var(--foreground-content)" }}>
 						<TableRow>
 							<TableCell>{props.object.objectName}</TableCell>
 							{ruleCategories.map((rule) => (
@@ -43,9 +45,11 @@ const DataTable: React.FC<DataTableProps> = (props) => {
 									const splitRuleCategory = ruleCategory.split(" ");
 									splitRuleCategory[0] = splitRuleCategory[0].toLowerCase();
 									const key: string = splitRuleCategory.join("");
+									const value = rule[key].toString().toUpperCase();
+
 									return (
 										<TableCell component='th' scope='row'>
-											{rule[key].toString().toUpperCase()}
+											{value ? value : "---"}
 										</TableCell>
 									);
 								})}

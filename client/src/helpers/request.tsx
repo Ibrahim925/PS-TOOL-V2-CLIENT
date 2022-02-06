@@ -9,6 +9,9 @@ export const register = async (userEmail: string) => {
 			data: {
 				userEmail,
 			},
+			headers: {
+				"Access-Control-Allow-Origin": "*",
+			},
 		});
 
 		return data;
@@ -25,6 +28,9 @@ export const logIn = async (userEmail: string, userPassword: string) => {
 			data: {
 				userEmail,
 				userPassword,
+			},
+			headers: {
+				"Access-Control-Allow-Origin": "*",
 			},
 		});
 
@@ -48,6 +54,7 @@ export const requestAccessToken = async () => {
 			url: `${URLS.Auth}/token`,
 			headers: {
 				Authorization: `Bearer ${refreshToken}`,
+				"Access-Control-Allow-Origin": "*",
 			},
 		});
 
@@ -74,6 +81,7 @@ export const request = async (
 			url: `${url}${path}`,
 			data,
 			headers: {
+				"Access-Control-Allow-Origin": "*",
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});

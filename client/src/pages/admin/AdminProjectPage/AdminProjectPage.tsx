@@ -11,12 +11,14 @@ import ConfigUploadDrawer from "../../../components/ConfigUploadDrawer/ConfigUpl
 import { LogiObject, URLS } from "../../../types";
 import NotFoundPage from "../../NotFoundPage/NotFoundPage";
 import { request } from "../../../helpers/request";
+import Loading from "../../../components/Loading/Loading";
 
 const AdminProjectPage: React.FC = () => {
 	const { page, projectName } = useParams();
 
 	const [showConfigUploadDrawer, setShowConfigUploadDrawer] = useState(false);
 	const [objects, setObjects] = useState<LogiObject[]>([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		(async () => {
@@ -28,8 +30,14 @@ const AdminProjectPage: React.FC = () => {
 			);
 
 			setObjects(getObjectsResponse);
+
+			setLoading(false);
 		})();
 	}, []);
+
+	if (loading) {
+		return <Loading isOpen={loading} />;
+	}
 
 	return page &&
 		!objects.map((object) => object.objectName).includes(page) &&
@@ -60,7 +68,10 @@ const AdminProjectPage: React.FC = () => {
 				{page === "Dashboard" ? (
 					<Dashboard />
 				) : (
-					<ObjectView objects={objects} object={page} />
+					<ObjectView
+						objects={objects}
+						object={objects.filter((object) => object.objectName === page)[0]}
+					/>
 				)}
 			</div>
 		</div>
