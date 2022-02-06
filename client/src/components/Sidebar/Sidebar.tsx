@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Accordion,
 	AccordionSummary as MuiAccordionSummary,
@@ -7,8 +7,10 @@ import {
 	styled,
 } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Sidebar.css";
+import { request } from "../../helpers/request";
+import { LogiObject, URLS } from "../../types";
 
 const AccordionSummary = styled((props) => (
 	<MuiAccordionSummary
@@ -26,19 +28,27 @@ const AccordionSummary = styled((props) => (
 	},
 }));
 
-interface SidebarProps {
-	projectName: string;
-	page: string;
-}
-
-const Sidebar: React.FC<SidebarProps> = (props) => {
+const Sidebar: React.FC = () => {
+	const { projectName, page } = useParams();
 	const navigate = useNavigate();
-	const basePath = `/Admin/Projects/${props.projectName}`;
+	const basePath = `/Admin/Projects/${projectName}`;
 
-	const [objects, setObjects] = useState([
-		{ objectName: "Base", objectConfig: "Base Configuration" },
-		{ objectName: "BOB", objectConfig: "Base Configuration" },
-	]);
+	const [objects, setObjects] = useState<LogiObject[]>([]);
+
+	useEffect(() => {
+		(async () => {
+			const getObjectsResponse: LogiObject[] = await request(
+				"GET",
+				URLS.Resource,
+				`/rule/object/${projectName}`,
+				{}
+			);
+
+			// TODO: DISPLAY OBJECTS AND DISPLAY RULES ON LOAD
+			console.log("RUNNING");
+			setObjects(getObjectsResponse);
+		})();
+	}, []);
 
 	const handleDashboardClick = () => {
 		navigate(`${basePath}/Dashboard`);
@@ -51,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 	return (
 		<div id='sidebar-container'>
 			<h2 id='sidebar-project-name-header' onClick={handleDashboardClick}>
-				{props.projectName}
+				{projectName}
 			</h2>
 
 			{[
@@ -66,13 +76,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 						</Typography>
 					</AccordionSummary>
 					{objects.map((object) =>
-						object.objectConfig === config ? (
+						object.objectConfig + " Configuration" === config ? (
 							<AccordionDetails
 								id='sidebar-accordion-details'
 								key={object.objectName}
 								onClick={() => handleObjectClick(object.objectName)}
 								style={
-									props.page === object.objectName
+									page === object.objectName
 										? { backgroundColor: "var(--foreground-content)" }
 										: {}
 								}>

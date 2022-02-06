@@ -10,7 +10,7 @@ import "./AdminProjectPage.css";
 import ConfigUploadDrawer from "../../../components/ConfigUploadDrawer/ConfigUploadDrawer";
 
 const AdminProjectPage: React.FC = () => {
-	const { projectName, page } = useParams();
+	const { page } = useParams();
 
 	const [showConfigUploadDrawer, setShowConfigUploadDrawer] = useState(false);
 
@@ -27,7 +27,7 @@ const AdminProjectPage: React.FC = () => {
 				}
 			/>
 
-			<Sidebar projectName={projectName as string} page={page as string} />
+			<Sidebar />
 			<div id='projectPage' className='page-with-header page-with-sidebar'>
 				<ConfigUploadDrawer
 					isOpen={showConfigUploadDrawer}

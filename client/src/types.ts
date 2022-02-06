@@ -56,3 +56,44 @@ export interface INotification {
 	notificationText: string;
 	notificationProject: string;
 }
+
+// Rules
+export enum Config {
+	Base = "Base",
+	Business = "Business",
+	Customer = "Customer",
+}
+
+export enum DataTypes {
+	String = "STRING",
+	Integer = "INTEGER",
+	Boolean = "BOOLEAN",
+	Char = "CHAR",
+	DateTime = "DATETIME",
+	Text = "TEXT",
+}
+
+export enum Cases {
+	Upper = "UPPER",
+	Lower = "LOWER",
+	Camel = "CAMEL",
+	Snake = "SNAKE",
+	Any = "ANY",
+}
+
+export interface Rule {
+	configuration: Config;
+	object: string;
+	field: string;
+	dataType: DataTypes;
+	case: Cases;
+	required: boolean;
+	dependency: string;
+}
+
+export interface LogiObject {
+	objectName: string;
+	objectConfig: Config;
+}
+
+export type Rules = Rule[];
