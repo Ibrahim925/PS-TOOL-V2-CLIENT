@@ -38,6 +38,7 @@ const App: React.FC = () => {
 			const accessToken = await requestAccessToken();
 
 			if (!accessToken) {
+				localStorage.removeItem("REFRESH-TOKEN");
 				setLoading(false);
 				return navigate("/Welcome/LogIn");
 			}
