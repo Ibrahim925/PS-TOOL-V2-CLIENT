@@ -46,7 +46,9 @@ const LogInPage: React.FC = () => {
 			if (userDataResponse.userType === "ADMIN") {
 				navigate("/Admin/Projects");
 			} else if (userDataResponse.userType === "CUSTOMER") {
-				console.log("CUSTOMER");
+				navigate(
+					`/Customer/Projects/${userDataResponse.userProject}/Dashboard`
+				);
 			}
 		}
 	};

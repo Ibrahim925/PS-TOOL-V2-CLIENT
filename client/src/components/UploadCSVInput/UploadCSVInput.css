@@ -1,5 +1,6 @@
 #csv-file-input-container {
 	cursor: pointer;
+	margin: 10px;
 }
 
 #upload-image {
@@ -9,7 +10,7 @@
 }
 
 #upload-csv-label {
-	margin-top: 30px;
+	float: left;
 	font-size: 30px;
 	font-family: bold;
 	opacity: 50%;

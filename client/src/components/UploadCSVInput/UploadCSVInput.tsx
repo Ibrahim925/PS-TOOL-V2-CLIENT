@@ -9,7 +9,7 @@ interface UploadCSVInputProps {
 
 const UploadCSVInput: React.FC<UploadCSVInputProps> = (props) => {
 	return (
-		<div>
+		<div style={{ margin: "10px" }}>
 			<label id='csv-file-input-container'>
 				<img id='upload-image' src={UploadImage} alt='Upload' />
 				<input

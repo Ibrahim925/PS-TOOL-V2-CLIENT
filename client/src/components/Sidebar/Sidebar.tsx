@@ -10,7 +10,8 @@ import { ArrowForwardIos } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Sidebar.css";
 import { request } from "../../helpers/request";
-import { LogiObject, URLS } from "../../types";
+import { IUser, LogiObject, URLS } from "../../types";
+import { useSelector } from "react-redux";
 
 const AccordionSummary = styled((props) => (
 	<MuiAccordionSummary
@@ -34,8 +35,13 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
 	const { projectName, page } = useParams();
+
+	const userState: IUser = useSelector((state: any) => state.userReducer);
+
 	const navigate = useNavigate();
-	const basePath = `/Admin/Projects/${projectName}`;
+	const basePath = `/${
+		userState.userType === "ADMIN" ? "Admin" : "Customer"
+	}/Projects/${projectName}`;
 
 	const handleDashboardClick = () => {
 		navigate(`${basePath}/Dashboard`);

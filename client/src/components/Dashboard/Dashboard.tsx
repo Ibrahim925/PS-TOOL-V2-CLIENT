@@ -10,6 +10,7 @@ import Button from "../Form/Button";
 import "./Dashboard.css";
 import { request } from "../../helpers/request";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Notifications
 const Notification: React.FC<INotification> = (props) => {
@@ -25,6 +26,7 @@ const Notification: React.FC<INotification> = (props) => {
 
 // Users
 interface UserProps extends IUser {
+	accountType: IUser["userType"];
 	setUsers: (callback: (users: IUser[]) => IUser[]) => void;
 }
 
@@ -54,12 +56,14 @@ const User: React.FC<UserProps> = (props) => {
 		<div id='user-container'>
 			<p id='user-email'>{props.userEmail}</p>
 			<div id='user-actions'>
-				<Tooltip title='Delete'>
-					<IconButton onClick={handleUserDelete}>
-						<Delete />
-					</IconButton>
-				</Tooltip>
-
+				{/* Make sure that the user is an admin so that they are able to delete other users */}
+				{props.accountType === "ADMIN" ? (
+					<Tooltip title='Delete'>
+						<IconButton onClick={handleUserDelete}>
+							<Delete />
+						</IconButton>
+					</Tooltip>
+				) : null}
 				<Tooltip title='Email'>
 					<IconButton onClick={handleUserEmail}>
 						<Mail />
@@ -80,6 +84,8 @@ const Dashboard: React.FC = () => {
 	const [getDashboardDataLoading, setGetDashboardData] = useState(true);
 
 	const { projectName } = useParams();
+
+	const userState: IUser = useSelector((state: any) => state.userReducer);
 
 	const handleAddUserFormClose = () => {
 		setShowAddUserForm(false);
@@ -143,16 +149,23 @@ const Dashboard: React.FC = () => {
 			<div id='users-section' className='dashboard-section'>
 				<h2 className='dasboard-section-header'>Users</h2>
 				<div className='dashboard-section-actions'>
-					<Tooltip title='Add User'>
-						<IconButton onClick={() => setShowAddUserForm(true)}>
-							<Add />
-						</IconButton>
-					</Tooltip>
+					{userState.userType === "ADMIN" ? (
+						<Tooltip title='Add User'>
+							<IconButton onClick={() => setShowAddUserForm(true)}>
+								<Add />
+							</IconButton>
+						</Tooltip>
+					) : null}
 				</div>
 				<div id='dashboard-section-scrollable-content'>
 					{users.length ? (
 						users.map((user) => (
-							<User key={user.id} {...user} setUsers={setUsers} />
+							<User
+								key={user.id}
+								{...user}
+								setUsers={setUsers}
+								accountType={userState.userType}
+							/>
 						))
 					) : (
 						<p id='dashboard-section-scrollable-content-empty'>No Users</p>

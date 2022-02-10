@@ -16,6 +16,7 @@ import { URLS, IUser } from "./types";
 import { useDispatch } from "react-redux";
 import { USER_LOG_IN } from "./state/actions";
 import "./index.css";
+import CustomerProjectPage from "./pages/customer/CustomerProjectPage/CustomerProjectPage";
 
 const App: React.FC = () => {
 	const [loading, setLoading] = useState(true);
@@ -58,12 +59,15 @@ const App: React.FC = () => {
 			const fullPath = location.pathname;
 			const rootPath = fullPath.split("/")[1];
 
-			if (rootPath !== "Admin" && rootPath !== "Customer") {
-				if (userDataResponse.userType === "ADMIN") {
-					navigate("/Admin/Projects");
-				} else if (userDataResponse.userType === "CUSTOMER") {
-					console.log("CUSTOMERRR");
-				}
+			if (userDataResponse.userType === "ADMIN" && rootPath !== "Admin") {
+				navigate("/Admin/Projects");
+			} else if (
+				userDataResponse.userType === "CUSTOMER" &&
+				rootPath !== "Customer"
+			) {
+				navigate(
+					`/Customer/Projects/${userDataResponse.userProject}/Dashboard`
+				);
 			}
 
 			setLoading(false);
@@ -80,6 +84,10 @@ const App: React.FC = () => {
 				<Route
 					path='/Admin/Projects/:projectName/:page'
 					element={<AdminProjectPage />}
+				/>
+				<Route
+					path='/Customer/Projects/:projectName/:page'
+					element={<CustomerProjectPage />}
 				/>
 				<Route path='/Admin/Projects' element={<ProjectsPage />} />
 				<Route path='/Welcome/:page' element={<AuthPage />} />

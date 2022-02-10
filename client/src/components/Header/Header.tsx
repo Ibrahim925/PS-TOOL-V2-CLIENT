@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 		if (userState.userType === "ADMIN") {
 			navigate("/Admin/Projects");
 		} else if (userState.userType === "CUSTOMER") {
-			console.log("CUSTOMERRR");
+			navigate(`/Customer/Projects/${userState.userProject}/Dashboard`);
 		}
 	};
 
