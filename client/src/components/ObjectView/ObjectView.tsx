@@ -35,7 +35,43 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 		})();
 	}, [props.object.objectName]);
 
-	const handleCSVUpload = async () => {};
+	const handleCSVUpload = async (e: any) => {
+		const file = e.target.files[0];
+		// Handles no file uploaded (user clicked cancel)
+		if (!file) return;
+
+		// setCsvName(file.name);
+		// setErrors([]);
+
+		// Get csv as text from file
+		const reader = new FileReader();
+		reader.readAsText(file);
+
+		reader.onload = async (e: any) => {
+			setLoading(true);
+
+			const csvText = e.target.result;
+			const uploadCSVResponse = await request(
+				"POST",
+				URLS.Validation,
+				"/validate",
+				{ projectName, objectName: props.object.objectName, csvText }
+			);
+
+			console.log(uploadCSVResponse);
+
+			const blob = new Blob([uploadCSVResponse.csvText], {
+				type: "text/csv",
+			});
+			const a = document.createElement("a");
+			a.href = window.URL.createObjectURL(blob);
+			a.download = "/TEST DOWNLOAD BABY";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			setLoading(false);
+		};
+	};
 
 	if (loading) {
 		return <Loading isOpen={loading} />;

@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { USER_LOG_IN } from "./state/actions";
 import "./index.css";
 import CustomerProjectPage from "./pages/customer/CustomerProjectPage/CustomerProjectPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 
 const App: React.FC = () => {
 	const [loading, setLoading] = useState(true);
@@ -59,7 +60,11 @@ const App: React.FC = () => {
 			const fullPath = location.pathname;
 			const rootPath = fullPath.split("/")[1];
 
-			if (userDataResponse.userType === "ADMIN" && rootPath !== "Admin") {
+			if (rootPath === "Settings") {
+			} else if (
+				userDataResponse.userType === "ADMIN" &&
+				rootPath !== "Admin"
+			) {
 				navigate("/Admin/Projects");
 			} else if (
 				userDataResponse.userType === "CUSTOMER" &&
@@ -81,6 +86,7 @@ const App: React.FC = () => {
 	return (
 		<div>
 			<Routes>
+				<Route path='/Settings/:settingsPage' element={<SettingsPage />} />
 				<Route
 					path='/Admin/Projects/:projectName/:page'
 					element={<AdminProjectPage />}

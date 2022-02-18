@@ -35,12 +35,20 @@ const Input: React.FC<InputProps> = (props) => {
 				className='form-input'
 				placeholder={props.placeholder ? props.placeholder : ""}
 				onChange={(e) => props.update(e.target.value)}
-				style={error ? { border: "1.5px solid red" } : {}}
+				style={{
+					border: error ? "1.5px solid red" : "",
+				}}
 				type={props.type || "text"}
 				value={props.value}
 			/>
 
-			{error && <p className='form-input-error-message'>{error.message}</p>}
+			{error && (
+				<p
+					className='form-input-error-message'
+					style={{ top: props.label ? 50 : 30 }}>
+					{error.message}
+				</p>
+			)}
 		</div>
 	);
 };

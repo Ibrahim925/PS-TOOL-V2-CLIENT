@@ -1,0 +1,37 @@
+#settings-page-sidebar-container {
+	width: 20%;
+	position: fixed;
+	bottom: 0;
+	top: 95px;
+	left: 0;
+	background-color: var(--foreground);
+	overflow-y: scroll;
+}
+
+#settings-page-sidebar-container-header {
+	margin-left: 10px;
+}
+
+#settings-page-sidebar-container-select {
+	padding: 5px;
+	padding-left: 20px;
+	cursor: pointer;
+	transition: 0.5s ease;
+	color: rgb(78, 78, 78);
+}
+
+#settings-page-sidebar-container-select:hover {
+	background-color: var(--foreground-content);
+}
+
+#settings-page-input {
+	margin-left: 30px;
+	margin-top: 50px;
+	width: 70%;
+}
+
+#settings-page-button {
+	margin-left: 30px;
+	margin-top: 40px;
+	width: 100px;
+}

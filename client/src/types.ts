@@ -15,6 +15,7 @@ export enum SuccessMessage {
 export enum URLS {
 	Auth = "https://ps-tool-v2-auth-service.herokuapp.com",
 	Resource = "https://ps-tool-v2-resource-service.herokuapp.com",
+	Validation = "https://ps-tool-v2-validation-service.herokuapp.com",
 }
 
 // User reducer actions
