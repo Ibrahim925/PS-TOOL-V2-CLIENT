@@ -9,7 +9,7 @@ const backdropStyles: React.CSSProperties = {
 	zIndex: 1000,
 	position: "static",
 	width: "100%",
-	height: "calc(100vh - 65px)",
+	height: "calc(100vh - 100px)",
 };
 
 const Loading: React.FC<LoadingProps> = (props) => {

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import DataTable from "../DataTable/DataTable";
 import { useSelector } from "react-redux";
 import UploadCSVInput from "../UploadCSVInput/UploadCSVInput";
+import downloadFile from "../../helpers/downloadFile";
 
 interface ObjectViewProps {
 	objects: LogiObject[];
@@ -18,6 +19,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 
 	const [rules, setRules] = useState<Rules>([]);
 	const [loading, setLoading] = useState(true);
+	const [errors, setErrors] = useState(false);
+	const [csvName, setCsvName] = useState("");
 
 	useEffect(() => {
 		(async () => {
@@ -40,8 +43,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 		// Handles no file uploaded (user clicked cancel)
 		if (!file) return;
 
-		// setCsvName(file.name);
-		// setErrors([]);
+		setCsvName(file.name);
+		setErrors(false);
 
 		// Get csv as text from file
 		const reader = new FileReader();
@@ -58,17 +61,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 				{ projectName, objectName: props.object.objectName, csvText }
 			);
 
-			console.log(uploadCSVResponse);
+			downloadFile(uploadCSVResponse.csvText, uploadCSVResponse.path);
 
-			const blob = new Blob([uploadCSVResponse.csvText], {
-				type: "text/csv",
-			});
-			const a = document.createElement("a");
-			a.href = window.URL.createObjectURL(blob);
-			a.download = "/TEST DOWNLOAD BABY";
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
 			setLoading(false);
 		};
 	};
