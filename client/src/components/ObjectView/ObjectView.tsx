@@ -87,7 +87,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 					error{errorCount > 1 ? "s" : ""}.<br />
 					<span id='object-view-error-message-more'>
 						You can view these errors in the downloaded CSV file:{" "}
-						<span style={{ color: "black", fontFamily: "bold" }}>
+						<span
+							style={{ color: "black", fontFamily: "bold", opacity: "100%" }}>
 							{outputCsvPath.split(".")[0]}
 						</span>
 					</span>
