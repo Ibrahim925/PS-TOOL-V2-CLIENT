@@ -56,6 +56,7 @@ export interface INotification {
 	notificationTime: string;
 	notificationText: string;
 	notificationProject: string;
+	notificationObject: string;
 }
 
 // Rules
