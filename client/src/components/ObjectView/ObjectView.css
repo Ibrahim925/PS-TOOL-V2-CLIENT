@@ -1,4 +1,4 @@
-#object-view-error-message {
+#object-view-message {
 	color: grey;
 	position: absolute;
 	top: 50%;
@@ -7,7 +7,7 @@
 	text-align: center;
 }
 
-#object-view-error-message-more {
+#object-view-message-more {
 	font-size: 20px;
 	opacity: 60%;
 }

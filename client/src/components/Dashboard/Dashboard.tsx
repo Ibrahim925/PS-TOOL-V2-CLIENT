@@ -111,17 +111,6 @@ const Dashboard: React.FC = () => {
 		handleAddUserFormClose();
 	};
 
-	const getNotifications = async () => {
-		const getNotificationsResponse = await request(
-			"GET",
-			URLS.Resource,
-			`/notification/${projectName}`,
-			{}
-		);
-
-		setNotifications(getNotificationsResponse);
-	};
-
 	useEffect(() => {
 		(async () => {
 			// Get all users in project
@@ -132,9 +121,15 @@ const Dashboard: React.FC = () => {
 				{}
 			);
 
-			await getNotifications();
+			const getNotificationsResponse = await request(
+				"GET",
+				URLS.Resource,
+				`/notification/${projectName}`,
+				{}
+			);
 
 			setUsers(getProjectUsersResponse);
+			setNotifications(getNotificationsResponse);
 			setGetDashboardDataLoading(false);
 		})();
 	}, []);
