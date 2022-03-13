@@ -12,10 +12,43 @@ import { request } from "../../helpers/request";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+interface NotificationProps extends INotification {
+	accountType: IUser["userType"];
+	setNotifications: (
+		callback: (notifications: INotification[]) => INotification[]
+	) => void;
+}
+
 // Notifications
-const Notification: React.FC<INotification> = (props) => {
+const Notification: React.FC<NotificationProps> = (props) => {
+	const handleNotificationDelete = async () => {
+		const isOk = window.confirm(
+			"Are you sure?\nThis action is not reversible!"
+		);
+
+		if (!isOk) return;
+
+		try {
+			await request("DELETE", URLS.Resource, `/notification/${props.id}`, {});
+
+			props.setNotifications((notifications: INotification[]) =>
+				notifications.filter((notification) => notification.id !== props.id)
+			);
+		} catch (error) {}
+	};
+
 	return (
 		<div id='notification-container'>
+			<div id='paper-actions'>
+				{/* Make sure that the user is an admin so that they are able to delete other users */}
+				{props.accountType === "ADMIN" ? (
+					<Tooltip title='Delete'>
+						<IconButton onClick={handleNotificationDelete}>
+							<Delete />
+						</IconButton>
+					</Tooltip>
+				) : null}
+			</div>
 			<p id='notification-time'>
 				{props.notificationDate} - {props.notificationTime}
 			</p>
@@ -55,7 +88,7 @@ const User: React.FC<UserProps> = (props) => {
 	return (
 		<div id='user-container'>
 			<p id='user-email'>{props.userEmail}</p>
-			<div id='user-actions'>
+			<div id='paper-actions'>
 				{/* Make sure that the user is an admin so that they are able to delete other users */}
 				{props.accountType === "ADMIN" ? (
 					<Tooltip title='Delete'>
@@ -145,7 +178,12 @@ const Dashboard: React.FC = () => {
 				<div id='dashboard-section-scrollable-content'>
 					{notifications.length ? (
 						notifications.map((notification) => (
-							<Notification key={notification.id} {...notification} />
+							<Notification
+								key={notification.id}
+								{...notification}
+								setNotifications={setNotifications}
+								accountType={userState.userType}
+							/>
 						))
 					) : (
 						<p id='dashboard-section-scrollable-content-empty'>
