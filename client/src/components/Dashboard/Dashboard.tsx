@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Delete, Mail, Add } from "@mui/icons-material";
+import { Delete, Mail, Add, Bento } from "@mui/icons-material";
 import { IconButton, Tooltip, CircularProgress, Snackbar } from "@mui/material";
 import { Errors, INotification, IUser, URLS } from "../../types";
 import Loading from "../Loading/Loading";
@@ -11,6 +11,7 @@ import "./Dashboard.css";
 import { request } from "../../helpers/request";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import downloadFile from "../../helpers/downloadFile";
 
 interface NotificationProps extends INotification {
 	accountType: IUser["userType"];
@@ -144,6 +145,17 @@ const Dashboard: React.FC = () => {
 		handleAddUserFormClose();
 	};
 
+	const handleErrorReportGenerate = async () => {
+		const errorReport = await request(
+			"GET",
+			URLS.Resource,
+			`/error/${projectName}`,
+			{}
+		);
+
+		downloadFile(errorReport, `${projectName} Report.csv`);
+	};
+
 	useEffect(() => {
 		(async () => {
 			// Get all users in project
@@ -175,6 +187,13 @@ const Dashboard: React.FC = () => {
 		<div id='dashboard-container'>
 			<div id='inbox-section' className='dashboard-section'>
 				<h2 className='dasboard-section-header'>Inbox</h2>
+				<div className='dashboard-section-actions'>
+					<Tooltip title='Generate Error Report'>
+						<IconButton onClick={handleErrorReportGenerate}>
+							<Bento />
+						</IconButton>
+					</Tooltip>
+				</div>
 				<div id='dashboard-section-scrollable-content'>
 					{notifications.length ? (
 						notifications.map((notification) => (
@@ -192,6 +211,7 @@ const Dashboard: React.FC = () => {
 					)}
 				</div>
 			</div>
+
 			<div id='users-section' className='dashboard-section'>
 				<h2 className='dasboard-section-header'>Users</h2>
 				<div className='dashboard-section-actions'>
