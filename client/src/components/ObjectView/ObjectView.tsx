@@ -75,7 +75,13 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 				{ projectName, objectName: props.object.objectName, csvText }
 			);
 
-			if (uploadCSVResponse.incorrectFields) {
+			if (uploadCSVResponse.missingDependencies) {
+				alert(
+					`The object is missing the following dependencies: ${uploadCSVResponse.missingDependencies.join(
+						","
+					)}`
+				);
+			} else if (uploadCSVResponse.incorrectFields) {
 				setIncorrectFields(true);
 			} else if (uploadCSVResponse.errorCount) {
 				setErrorCount(uploadCSVResponse.errorCount);
