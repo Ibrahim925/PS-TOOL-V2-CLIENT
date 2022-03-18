@@ -99,6 +99,16 @@ const Project: React.FC<ProjectProps> = (props) => {
 				onClick={handleProjectClick}
 				onContextMenu={(e) => handleContextMenu(e)}>
 				{props.projectName}
+				<span
+					style={{
+						position: "absolute",
+						right: 10,
+						top: -20,
+						fontSize: 15,
+						opacity: "70%",
+					}}>
+					{props.projectVersion}
+				</span>
 			</Item>
 			<Menu
 				anchorReference='anchorPosition'
