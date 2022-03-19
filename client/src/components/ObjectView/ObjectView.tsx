@@ -8,8 +8,24 @@ import { useSelector } from "react-redux";
 import UploadCSVInput from "../UploadCSVInput/UploadCSVInput";
 import downloadFile from "../../helpers/downloadFile";
 import "./ObjectView.css";
+import { Box, LinearProgress, Typography } from "@mui/material";
 
 const LIMIT = 1000000000;
+
+const LinearProgressWithLabel = (props: any) => {
+	return (
+		<Box sx={{ display: "flex", alignItems: "center" }}>
+			<Box sx={{ width: "100%", mr: 1 }}>
+				<LinearProgress variant='determinate' {...props} />
+			</Box>
+			<Box sx={{ minWidth: 35 }}>
+				<Typography variant='body2' color='text.secondary'>{`${Math.round(
+					props.value
+				)}%`}</Typography>
+			</Box>
+		</Box>
+	);
+};
 
 interface ObjectViewProps {
 	objects: LogiObject[];
@@ -27,6 +43,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 	const [outputCsvPath, setOutputCsvPath] = useState("");
 	const [incorrectFields, setIncorrectFields] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const [jobProgress, setJobProgress] = useState(0);
+	const [jobLoading, setJobLoading] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -36,6 +54,8 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 			setOutputCsvPath("");
 			setIncorrectFields(false);
 			setLoading(true);
+			setJobProgress(0);
+
 			// Get rules for object
 			const getObjectRulesResponse = await request(
 				"GET",
@@ -48,6 +68,50 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 			setLoading(false);
 		})();
 	}, [props.object.objectName]);
+
+	const checkJobStatus = async (jobId: number) => {
+		const checkJob = setInterval(async () => {
+			const uploadCSVResponse = await request(
+				"GET",
+				URLS.Validation,
+				`/validate/${jobId}`,
+				{}
+			);
+
+			console.log(uploadCSVResponse);
+
+			if ("jobProgress" in uploadCSVResponse) {
+				setJobProgress(uploadCSVResponse.jobProgress);
+			} else {
+				if (uploadCSVResponse.missingDependencies) {
+					alert(
+						`The object is missing the following dependencies: ${uploadCSVResponse.missingDependencies.join(
+							","
+						)}`
+					);
+				} else if (uploadCSVResponse.incorrectFields) {
+					setIncorrectFields(true);
+				} else if (uploadCSVResponse.errorCount) {
+					setErrorCount(uploadCSVResponse.errorCount);
+					setOutputCsvPath(uploadCSVResponse.payload.path);
+					downloadFile(
+						uploadCSVResponse.payload.csvText,
+						uploadCSVResponse.payload.path
+					);
+				} else if (uploadCSVResponse.success) {
+					setSuccess(true);
+					setOutputCsvPath(uploadCSVResponse.payload.path);
+					downloadFile(
+						uploadCSVResponse.payload.csvText,
+						uploadCSVResponse.payload.path
+					);
+				}
+
+				setJobLoading(false);
+				clearInterval(checkJob);
+			}
+		}, 5000);
+	};
 
 	const handleCSVUpload = async (e: any) => {
 		const file = e.target.files[0];
@@ -64,42 +128,23 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 		reader.readAsText(file);
 
 		reader.onload = async (e: any) => {
-			setLoading(true);
+			setJobLoading(true);
 
 			const csvText = e.target.result;
 
-			const uploadCSVResponse = await request(
-				"POST",
-				URLS.Validation,
-				"/validate",
-				{ projectName, objectName: props.object.objectName, csvText }
+			const jobId = await request("POST", URLS.Validation, "/validate", {
+				projectName,
+				objectName: props.object.objectName,
+				csvText,
+			});
+
+			console.log(jobId);
+
+			alert(
+				"Object data uploaded for validation. Please do not refresh or navigate away from this page."
 			);
 
-			if (uploadCSVResponse.missingDependencies) {
-				alert(
-					`The object is missing the following dependencies: ${uploadCSVResponse.missingDependencies.join(
-						","
-					)}`
-				);
-			} else if (uploadCSVResponse.incorrectFields) {
-				setIncorrectFields(true);
-			} else if (uploadCSVResponse.errorCount) {
-				setErrorCount(uploadCSVResponse.errorCount);
-				setOutputCsvPath(uploadCSVResponse.payload.path);
-				downloadFile(
-					uploadCSVResponse.payload.csvText,
-					uploadCSVResponse.payload.path
-				);
-			} else if (uploadCSVResponse.success) {
-				setSuccess(true);
-				setOutputCsvPath(uploadCSVResponse.payload.path);
-				downloadFile(
-					uploadCSVResponse.payload.csvText,
-					uploadCSVResponse.payload.path
-				);
-			}
-
-			setLoading(false);
+			checkJobStatus(jobId);
 		};
 	};
 
@@ -107,6 +152,34 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 		userState.userType === "CUSTOMER" ? (
 			<UploadCSVInput handleCSVUpload={handleCSVUpload} csvName={csvName} />
 		) : null;
+
+	if (jobLoading) {
+		return (
+			<Box
+				sx={{ width: "70%" }}
+				style={{
+					position: "absolute",
+					top: "50%",
+					left: "50%",
+					transform: "translateX(-50%) translateY(-50%)",
+				}}>
+				<LinearProgressWithLabel
+					variant='determinate'
+					value={jobProgress}
+					color='secondary'
+				/>
+				<Typography
+					style={{
+						position: "absolute",
+						left: "50%",
+						transform: "translateX(-50%)",
+						color: "grey",
+					}}>
+					Might want to get a snack...
+				</Typography>
+			</Box>
+		);
+	}
 
 	if (loading) {
 		return <Loading isOpen={loading} />;
