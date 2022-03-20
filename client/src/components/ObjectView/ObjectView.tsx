@@ -110,7 +110,7 @@ const ObjectView: React.FC<ObjectViewProps> = (props) => {
 				setJobLoading(false);
 				clearInterval(checkJob);
 			}
-		}, 3000);
+		}, 5000);
 	};
 
 	const handleCSVUpload = async (e: any) => {
